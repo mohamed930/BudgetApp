@@ -14,16 +14,8 @@ enum TransactionType: String {
 
 struct AddTransactionView: View {
     
-    @State var name: String = ""
-    @State var comment: String = ""
-    @State var price: String = ""
-    @State var type: TransactionType? = nil
-    @FocusState var isFocused : Bool
-    @State var selectedTransIn: Bool = false
-    @State var selectedTransOut: Bool = false
-    @State var buttonEnabled: Bool = false
-    
-    
+    @StateObject var viewmodel = AddTransactionViewModel()
+
     var body: some View {
         
         NavigationView {
@@ -47,7 +39,7 @@ struct AddTransactionView: View {
                                     .setFont(fontName: .mainFontBold, size: 14)
                                     .padding(.horizontal,10)
                                 
-                                TextField("", text: $name)
+                                TextField("", text: $viewmodel.name)
                                     .multilineTextAlignment(.trailing)
                                     .padding(6)
                                     .setFont(fontName: .mainFontBold, size: 16)
@@ -55,35 +47,32 @@ struct AddTransactionView: View {
                                     
                                     .background(RoundedRectangle(cornerRadius: 30)
                                                 .stroke(Color("#f6F6F6"), lineWidth: 1))
-                                    .focused($isFocused)
                                     .padding(.bottom,30)
                                 
                                 Text("تفاصيل المعاملة")
                                     .setFont(fontName: .mainFontBold, size: 14)
                                     .padding(.horizontal,10)
                                 
-                                TextEditor(text: $comment)
+                                TextEditor(text: $viewmodel.comment)
                                                 .foregroundStyle(.secondary)
                                                 .frame(height: 100)
                                                 .padding(.horizontal)
                                                 .multilineTextAlignment(.trailing)
                                                 .background(RoundedRectangle(cornerRadius: 30)
                                                             .stroke(Color("#f6F6F6"), lineWidth: 1))
-                                                .focused($isFocused)
                                                 .padding(.bottom,30)
                                 
                                 Text("مبلغ المعاملة")
                                     .setFont(fontName: .mainFontBold, size: 14)
                                     .padding(.horizontal,10)
                                 
-                                TextField("", text: $price)
+                                TextField("", text: $viewmodel.price)
                                     .multilineTextAlignment(.trailing)
                                     .padding(6)
                                     .setFont(fontName: .mainFontBold, size: 16)
                                     .keyboardType(.asciiCapableNumberPad)
                                     .background(RoundedRectangle(cornerRadius: 30)
                                                 .stroke(Color("#f6F6F6"), lineWidth: 1))
-                                    .focused($isFocused)
                                     .padding(.bottom,30)
                                 
                                 Text("نوع المعاملة")
@@ -94,15 +83,12 @@ struct AddTransactionView: View {
                                     
                                     // First Component
                                     Button(action: {
-                                        print("Button 1 tapped!!")
-                                        selectedTransIn  = true
-                                        selectedTransOut = false
-                                        type = .TransIn
+                                        viewmodel.selectTransActionType(.TransIn)
                                     }, label: {
                                         HStack {
                                             Circle()
-                                                .stroke(selectedTransIn ? .clear : Color.gray, lineWidth: 2)
-                                                .background(Circle().foregroundColor(selectedTransIn ? Color("#0032Ee") : .clear))
+                                                .stroke(viewmodel.selectedTransIn ? .clear : Color.gray, lineWidth: 2)
+                                                .background(Circle().foregroundColor(viewmodel.selectedTransIn ? Color("#0032Ee") : .clear))
                                                 .frame(width: 24, height: 24)
                                                 .padding(.trailing,10)
                                             
@@ -117,29 +103,26 @@ struct AddTransactionView: View {
                                             
                                             Spacer()
                                             
-                                            Text("صادر")
+                                            Text("وارد")
                                                 .font(.headline)
                                                 .foregroundColor(.black)
                                         }
                                         .padding()
                                         .background(
                                             RoundedRectangle(cornerRadius: 15)
-                                                .stroke(selectedTransIn ? Color("#0032Ee") : Color("#EDEDED"))
-                                                .fill(selectedTransIn ? Color("#E6EBFD") : .clear)
+                                                .stroke(viewmodel.selectedTransIn ? Color("#0032Ee") : Color("#EDEDED"))
+                                                .fill(viewmodel.selectedTransIn ? Color("#E6EBFD") : .clear)
                                         )
                                     })
                                     
                                     // Second Component
                                     Button(action: {
-                                        print("Button 2 tapped!!")
-                                        selectedTransIn  = false
-                                        selectedTransOut = true
-                                        type = .TransOut
+                                        viewmodel.selectTransActionType(.TransOut)
                                     }, label: {
                                         HStack {
                                             Circle()
-                                                .stroke(selectedTransOut ? .clear : Color.gray, lineWidth: 2)
-                                                .background(Circle().foregroundColor(selectedTransOut ? Color("#0032Ee") : .clear))
+                                                .stroke(viewmodel.selectedTransOut ? .clear : Color.gray, lineWidth: 2)
+                                                .background(Circle().foregroundColor(viewmodel.selectedTransOut ? Color("#0032Ee") : .clear))
                                                 .frame(width: 24, height: 24)
                                                 .padding(.trailing,10)
                                             
@@ -161,8 +144,8 @@ struct AddTransactionView: View {
                                         .padding()
                                         .background(
                                             RoundedRectangle(cornerRadius: 15)
-                                                .stroke(selectedTransOut ? Color("#0032Ee") : Color("#EDEDED"))
-                                                .fill(selectedTransOut ? Color("#E6EBFD") : .clear)
+                                                .stroke(viewmodel.selectedTransOut ? Color("#0032Ee") : Color("#EDEDED"))
+                                                .fill(viewmodel.selectedTransOut ? Color("#E6EBFD") : .clear)
                                         )
                                     })
                                     
@@ -183,24 +166,16 @@ struct AddTransactionView: View {
                 
                 Spacer()
                 
-                MainButton(buttonTitle: "حفظ و استمرار", isEnabled: checkButton()) {
+                MainButton(buttonTitle: "حفظ و استمرار", isEnabled: viewmodel.checkButton()) {
                     // MARK: - Save button action
                     
                 }
-            }
-            
-            
-            
-            
+            }            
         }
         .navigationTitle("اضف معاملة")
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .padding()
         
-    }
-    
-    private func checkButton() -> Bool {
-        return !name.isEmpty && !comment.isEmpty && !price.isEmpty && type != nil
     }
 }
 

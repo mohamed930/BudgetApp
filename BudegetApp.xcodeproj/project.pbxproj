@@ -11,6 +11,7 @@
 		D33475692CA94708000E7EB6 /* FilterButtonSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33475682CA94708000E7EB6 /* FilterButtonSheet.swift */; };
 		D334756B2CA9474E000E7EB6 /* FilterOptionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334756A2CA9474E000E7EB6 /* FilterOptionRow.swift */; };
 		D334756D2CA95792000E7EB6 /* MonthYearPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334756C2CA95792000E7EB6 /* MonthYearPickerView.swift */; };
+		D33475702CA95B81000E7EB6 /* AddTransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334756F2CA95B81000E7EB6 /* AddTransactionViewModel.swift */; };
 		D3814C212CA811F800010F41 /* MainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3814C202CA811F800010F41 /* MainButton.swift */; };
 		D3814C232CA8136300010F41 /* NavigationComponets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3814C222CA8136300010F41 /* NavigationComponets.swift */; };
 		D38EA3F02CA6D5A200503A32 /* BudegetAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38EA3EF2CA6D5A200503A32 /* BudegetAppApp.swift */; };
@@ -30,6 +31,7 @@
 		D33475682CA94708000E7EB6 /* FilterButtonSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButtonSheet.swift; sourceTree = "<group>"; };
 		D334756A2CA9474E000E7EB6 /* FilterOptionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterOptionRow.swift; sourceTree = "<group>"; };
 		D334756C2CA95792000E7EB6 /* MonthYearPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthYearPickerView.swift; sourceTree = "<group>"; };
+		D334756F2CA95B81000E7EB6 /* AddTransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionViewModel.swift; sourceTree = "<group>"; };
 		D3814C202CA811F800010F41 /* MainButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainButton.swift; sourceTree = "<group>"; };
 		D3814C222CA8136300010F41 /* NavigationComponets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationComponets.swift; sourceTree = "<group>"; };
 		D38EA3EC2CA6D5A200503A32 /* BudegetApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BudegetApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +69,22 @@
 				D334756A2CA9474E000E7EB6 /* FilterOptionRow.swift */,
 			);
 			path = sheets;
+			sourceTree = "<group>";
+		};
+		D334756E2CA95B72000E7EB6 /* viewmodel */ = {
+			isa = PBXGroup;
+			children = (
+				D334756F2CA95B81000E7EB6 /* AddTransactionViewModel.swift */,
+			);
+			path = viewmodel;
+			sourceTree = "<group>";
+		};
+		D33475712CA95B84000E7EB6 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				D38EA40F2CA6E64000503A32 /* AddTransactionView.swift */,
+			);
+			path = view;
 			sourceTree = "<group>";
 		};
 		D38EA3E32CA6D5A200503A32 = {
@@ -132,8 +150,8 @@
 		D38EA40C2CA6E60900503A32 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				D38EA40E2CA6E62D00503A32 /* AddTransaction */,
 				D38EA40D2CA6E61400503A32 /* Home */,
+				D38EA40E2CA6E62D00503A32 /* AddTransaction */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -150,7 +168,8 @@
 		D38EA40E2CA6E62D00503A32 /* AddTransaction */ = {
 			isa = PBXGroup;
 			children = (
-				D38EA40F2CA6E64000503A32 /* AddTransactionView.swift */,
+				D334756E2CA95B72000E7EB6 /* viewmodel */,
+				D33475712CA95B84000E7EB6 /* view */,
 			);
 			path = AddTransaction;
 			sourceTree = "<group>";
@@ -241,6 +260,7 @@
 				D38EA40B2CA6E2DC00503A32 /* recietViewComponents.swift in Sources */,
 				D334756B2CA9474E000E7EB6 /* FilterOptionRow.swift in Sources */,
 				D334756D2CA95792000E7EB6 /* MonthYearPickerView.swift in Sources */,
+				D33475702CA95B81000E7EB6 /* AddTransactionViewModel.swift in Sources */,
 				D38EA4092CA6DFEF00503A32 /* TransactionRow.swift in Sources */,
 				D38EA4102CA6E64000503A32 /* AddTransactionView.swift in Sources */,
 				D38EA3F02CA6D5A200503A32 /* BudegetAppApp.swift in Sources */,

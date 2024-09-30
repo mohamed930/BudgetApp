@@ -7,16 +7,9 @@
 
 import SwiftUI
 import FittedSheetsSwiftUI
+import CoreData
 
 struct HomeView: View {
-    
-    @State var productPrice = 200.0
-    @State var deliveryFees = 35.0
-    @State var totalPrice = 235.0
-    
-    
-    @State var buttonSheet: Bool = false
-    @State var dateSheet: Bool = false
     
     // MARK: - Configure Detail FittedSheets Settings
     @State var sheetConfiguration = SheetConfiguration(sizes: [.intrinsic], // .fixed(290)
@@ -24,6 +17,10 @@ struct HomeView: View {
                                                 sheetViewControllerOptinos: [.allowPullingPastMaxHeight(false)],
                                                 shouldDismiss: nil,
                                                 didDismiss: nil)
+    
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(sortDescriptors: []) var transaction: FetchedResults<Transaction>
+    @StateObject var viewmodel = HomeViewModel()
     
     var body: some View {
         NavigationView {
@@ -39,7 +36,7 @@ struct HomeView: View {
                         Spacer()
                         
                         NavigationLink {
-                            AddTransactionView()
+                            AddTransactionView(viewmodel: AddTransactionViewModel(moc: moc, boxMoney: viewmodel.remainPrice))
                         } label: {
                             Image(systemName: "note.text.badge.plus")
                                 .resizable()
@@ -74,16 +71,16 @@ struct HomeView: View {
                 .foregroundStyle(Color("#67677A"))
                 .onTapGesture {
                     // MARK: - Button sheet.
-                    dateSheet = true
-                    buttonSheet = true
+                    viewmodel.dateSheet = true
+                    viewmodel.buttonSheet = true
                     
                 }
                 
-                Text("EGP 1300")
+                Text("EGP \(viewmodel.sumTransActionPrice.description)")
                     .setFont(fontName: .mainFontBold, size: 34)
                     .foregroundStyle(Color("#303048"))
                 
-                BudgetView(leftToSpend: 738, monthlyBudget: 2550)
+                BudgetView(leftToSpend: viewmodel.remainPrice, monthlyBudget: viewmodel.sumTransActionPrice)
                 
                 
                 VStack(alignment: .leading) {
@@ -93,8 +90,8 @@ struct HomeView: View {
                         // Filter Button.
                         Button(action: {
                             // MARK: - Filter button action.
-                            buttonSheet = true
-                            dateSheet = false
+                            viewmodel.buttonSheet = true
+                            viewmodel.dateSheet = false
                         }, label: {
                             HStack(spacing: 8) {
                                 
@@ -124,9 +121,9 @@ struct HomeView: View {
                     
                     ScrollView {
                         
-                        ForEach(0..<3) { _ in
+                        ForEach(0..<viewmodel.data.count, id: \.self) { index in
                             VStack(spacing: 20) {
-                                TransactionRow(day: "Tuesday", date: "28 Jun 2023", amount: 300, currency: "EGP")
+                                TransactionRow(model: $viewmodel.data[index])
                             }
                         }
                     }
@@ -136,27 +133,41 @@ struct HomeView: View {
                 
                 Spacer()
                 
-                recietViewComponents(productPrice: $productPrice, deliveryFees: $deliveryFees, totalPrice: $totalPrice)
+                recietViewComponents(countOfTranaction: $viewmodel.countOfTranaction, transActionTotalPrice: $viewmodel.transActionTotalPrice)
                     .frame(height: 90)
                 
                 
             }
             .padding()
-            .fittedSheet(isPresented: $buttonSheet,
+            .onAppear {
+                let request = Transaction.fetchRequest()
+                let transactions = try? moc.fetch(request)
+                viewmodel.transaction = transactions
+                viewmodel.renderData()
+            }
+            .fittedSheet(isPresented: $viewmodel.buttonSheet,
                          configuration: sheetConfiguration,
                          sheetView: {
                 
-                if dateSheet {
+                if viewmodel.dateSheet {
                     MonthYearPickerView()
                 }
                 else {
                     FilterButtonSheet { response in
-                        buttonSheet = false
+                        viewmodel.buttonSheet = false
+                        
+                        guard let response else { viewmodel.renderData()
+                            return
+                        }
+                        
+                        if response {
+                            viewmodel.renderData(type: .TransOut)
+                        }
+                        else {
+                            viewmodel.renderData(type: .TransIn)
+                        }
                     }
                 }
-                
-                
-                
                 
             }, animated: false)
         }

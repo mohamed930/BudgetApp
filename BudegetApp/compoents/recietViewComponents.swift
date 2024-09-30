@@ -9,9 +9,8 @@ import SwiftUI
 
 struct recietViewComponents: View {
     
-    @Binding var productPrice: Double
-    @Binding var deliveryFees: Double
-    @Binding var totalPrice: Double
+    @Binding var countOfTranaction: Int
+    @Binding var transActionTotalPrice: Double
     
     var body: some View {
         
@@ -22,7 +21,7 @@ struct recietViewComponents: View {
             VStack(spacing: 16) {
                 HStack {
                     
-                    Text("EGP \(productPrice.description)")
+                    Text("\(countOfTranaction.description) عملية")
                         .setFont(fontName: .mainFontBold, size: 14)
                     
                     Spacer()
@@ -35,7 +34,7 @@ struct recietViewComponents: View {
                 
                 HStack {
                     
-                    Text("EGP \(deliveryFees.description)")
+                    Text("EGP \(transActionTotalPrice.description)")
                         .setFont(fontName: .mainFontBold, size: 14)
                     
                     Spacer()
@@ -56,9 +55,8 @@ struct recietViewComponents: View {
 
 #Preview {
     
-    @State var productPrice = 200.0
+    @State var productPrice = 200
     @State var deliveryFees = 35.0
-    @State var totalPrice = 235.0
     
-    return recietViewComponents(productPrice: $productPrice, deliveryFees: $deliveryFees, totalPrice: $totalPrice)
+    return recietViewComponents(countOfTranaction: $productPrice, transActionTotalPrice: $deliveryFees)
 }

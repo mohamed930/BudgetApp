@@ -12,7 +12,7 @@ struct BudgetView: View {
     var monthlyBudget: Double
     
     var progress: Double {
-        return (monthlyBudget - leftToSpend) / monthlyBudget
+        return leftToSpend / monthlyBudget
     }
     
     var body: some View {
@@ -31,10 +31,11 @@ struct BudgetView: View {
                 Spacer()
                 
                 VStack(alignment: .center) {
-                    Text("الميزانية الشهرية")
+                    Text("ما تم صرفه")
                         .font(.subheadline)
                         .foregroundColor(.gray)
-                    Text("EGP \(Int(monthlyBudget))")
+                    
+                    Text("EGP \(Int(monthlyBudget - leftToSpend))")
                         .font(.title)
                         .fontWeight(.bold)
                 }
@@ -48,17 +49,26 @@ struct BudgetView: View {
                     .foregroundColor(.gray.opacity(0.2))
                 
                 HStack(spacing: 0) {
+                    // Ensure progress is capped between 0 and 1
+                    let validProgress = min(max(progress, 0), 1)
+                    let totalWidth = UIScreen.main.bounds.width - 80 // Adjust width based on layout needs
+                    
+                    // Calculate the orange part of the progress
                     RoundedRectangle(cornerRadius: 10)
-                        .frame(width: (progress * UIScreen.main.bounds.width - 80), height: 10)
+                        .frame(height: 10)
                         .foregroundColor(.orange)
-                    RoundedRectangle(cornerRadius: 10)
-                        .frame(width: ((progress - 0.3) * UIScreen.main.bounds.width - 40), height: 10)
-                        .foregroundColor(.blue)
+                    
+                    // Calculate the blue part of the progress, ensuring it’s never negative
+                    if validProgress > 0.3 {
+                        RoundedRectangle(cornerRadius: 10)
+                            .frame(width: (validProgress - 0.3) * totalWidth, height: 10)
+                            .foregroundColor(.blue)
+                    }
                 }
             }
             .padding(.top, 10)
         }
-        .frame(width: UIScreen.screenWidth - 70)
+        .frame(width: UIScreen.main.bounds.width - 70)
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 15)

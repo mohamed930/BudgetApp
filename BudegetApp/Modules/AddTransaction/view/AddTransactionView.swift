@@ -8,13 +8,13 @@
 import SwiftUI
 
 enum TransactionType: String {
-    case TransIn
-    case TransOut
+    case TransIn = "TransIn"
+    case TransOut = "TransOut"
 }
 
 struct AddTransactionView: View {
     
-    @StateObject var viewmodel = AddTransactionViewModel()
+    @ObservedObject var viewmodel: AddTransactionViewModel
 
     var body: some View {
         
@@ -168,9 +168,24 @@ struct AddTransactionView: View {
                 
                 MainButton(buttonTitle: "حفظ و استمرار", isEnabled: viewmodel.checkButton()) {
                     // MARK: - Save button action
-                    
+                    viewmodel.saveUser()
                 }
-            }            
+            }
+            .alert(isPresented: $viewmodel.alert) {
+                
+                if viewmodel.errorAlert {
+                    Alert(title: Text("انتبه"), message: Text("خارج الميزانية"), dismissButton: .cancel(Text("تم"), action: {
+                        viewmodel.alert = false
+                    }) )
+                }
+                else {
+                    Alert(title: Text("انتبه"), message: Text("تمت حفظ البيانات بنجاح"), dismissButton: .cancel(Text("تم"), action: {
+                        viewmodel.alert = false
+                    }) )
+                }
+                
+                
+            }
         }
         .navigationTitle("اضف معاملة")
         .ignoresSafeArea(.keyboard, edges: .bottom)
@@ -179,6 +194,8 @@ struct AddTransactionView: View {
     }
 }
 
-#Preview {
-    AddTransactionView()
-}
+//#Preview {
+//    @StateObject var dataController = DataController()
+//    
+//    AddTransactionView(viewmodel: AddTransactionViewModel(moc: dataController.container.managedObjectModel))
+//}

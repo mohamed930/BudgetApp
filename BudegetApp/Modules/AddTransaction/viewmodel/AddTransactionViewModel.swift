@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 class AddTransactionViewModel: ObservableObject {
     
@@ -16,6 +17,16 @@ class AddTransactionViewModel: ObservableObject {
     @Published var selectedTransIn: Bool = false
     @Published var selectedTransOut: Bool = false
     @Published var buttonEnabled: Bool = false
+    @Published var alert: Bool = false
+    @Published var errorAlert: Bool = false
+    
+    let moc: NSManagedObjectContext
+    let boxMoney: Double
+    
+    init(moc: NSManagedObjectContext,boxMoney: Double) {
+        self.moc = moc
+        self.boxMoney = boxMoney
+    }
     
     
     func selectTransActionType(_ type: TransactionType) {
@@ -35,6 +46,37 @@ class AddTransactionViewModel: ObservableObject {
         return !name.isEmpty && !comment.isEmpty && !price.isEmpty && type != nil
     }
     
+    func saveUser() {
+        
+        if type == .TransOut {
+            if Double(price)! <= boxMoney {
+                saveTransaction()
+            }
+            else {
+                errorAlert = true
+                alert = true
+            }
+        }
+        else {
+            saveTransaction()
+        }
+        
+        
+    }
+    
+    private func saveTransaction() {
+        let transaction = Transaction(context: moc)
+        transaction.id = UUID()
+        transaction.name = name
+        transaction.comment = comment
+        transaction.price = Double(price)!
+        transaction.type = type!.rawValue
+        transaction.date = Date()
+        
+        try? moc.save()
+        errorAlert = false
+        alert = true
+    }
     
     
 }

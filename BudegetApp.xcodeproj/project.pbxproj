@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D30F19742CAB096E008ED32C /* TransActionData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D30F19722CAB096E008ED32C /* TransActionData.xcdatamodeld */; };
+		D30F19762CAB09FC008ED32C /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30F19752CAB09FC008ED32C /* DataController.swift */; };
+		D30F19782CAB11B4008ED32C /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30F19772CAB11B4008ED32C /* HomeViewModel.swift */; };
 		D33475662CA946A3000E7EB6 /* FittedSheetsSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = D33475652CA946A3000E7EB6 /* FittedSheetsSwiftUI */; };
 		D33475692CA94708000E7EB6 /* FilterButtonSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33475682CA94708000E7EB6 /* FilterButtonSheet.swift */; };
 		D334756B2CA9474E000E7EB6 /* FilterOptionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D334756A2CA9474E000E7EB6 /* FilterOptionRow.swift */; };
@@ -28,6 +31,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D30F19732CAB096E008ED32C /* TransActionData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TransActionData.xcdatamodel; sourceTree = "<group>"; };
+		D30F19752CAB09FC008ED32C /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		D30F19772CAB11B4008ED32C /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		D33475682CA94708000E7EB6 /* FilterButtonSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButtonSheet.swift; sourceTree = "<group>"; };
 		D334756A2CA9474E000E7EB6 /* FilterOptionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterOptionRow.swift; sourceTree = "<group>"; };
 		D334756C2CA95792000E7EB6 /* MonthYearPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthYearPickerView.swift; sourceTree = "<group>"; };
@@ -61,6 +67,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D30F19712CAB094C008ED32C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D30F19752CAB09FC008ED32C /* DataController.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		D33475672CA946F9000E7EB6 /* sheets */ = {
 			isa = PBXGroup;
 			children = (
@@ -108,12 +122,14 @@
 			children = (
 				D38EA4022CA6D9A500503A32 /* Info.plist */,
 				D38EA3EF2CA6D5A200503A32 /* BudegetAppApp.swift */,
+				D30F19712CAB094C008ED32C /* Model */,
 				D38EA40C2CA6E60900503A32 /* Modules */,
 				D38EA4052CA6DB2500503A32 /* compoents */,
 				D38EA3FD2CA6D6BD00503A32 /* Utiitlies */,
 				D38EA3F32CA6D5A300503A32 /* Assets.xcassets */,
 				D38EA4002CA6D99B00503A32 /* DMSans-Bold.ttf */,
 				D38EA3F52CA6D5A300503A32 /* Preview Content */,
+				D30F19722CAB096E008ED32C /* TransActionData.xcdatamodeld */,
 			);
 			path = BudegetApp;
 			sourceTree = "<group>";
@@ -159,6 +175,7 @@
 		D38EA40D2CA6E61400503A32 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				D30F19772CAB11B4008ED32C /* HomeViewModel.swift */,
 				D38EA3F12CA6D5A200503A32 /* HomeView.swift */,
 				D33475672CA946F9000E7EB6 /* sheets */,
 			);
@@ -251,6 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D30F19782CAB11B4008ED32C /* HomeViewModel.swift in Sources */,
 				D38EA4042CA6D9D300503A32 /* Font.swift in Sources */,
 				D33475692CA94708000E7EB6 /* FilterButtonSheet.swift in Sources */,
 				D38EA3F22CA6D5A200503A32 /* HomeView.swift in Sources */,
@@ -259,10 +277,12 @@
 				D38EA3FF2CA6D6D400503A32 /* Date.swift in Sources */,
 				D38EA40B2CA6E2DC00503A32 /* recietViewComponents.swift in Sources */,
 				D334756B2CA9474E000E7EB6 /* FilterOptionRow.swift in Sources */,
+				D30F19742CAB096E008ED32C /* TransActionData.xcdatamodeld in Sources */,
 				D334756D2CA95792000E7EB6 /* MonthYearPickerView.swift in Sources */,
 				D33475702CA95B81000E7EB6 /* AddTransactionViewModel.swift in Sources */,
 				D38EA4092CA6DFEF00503A32 /* TransactionRow.swift in Sources */,
 				D38EA4102CA6E64000503A32 /* AddTransactionView.swift in Sources */,
+				D30F19762CAB09FC008ED32C /* DataController.swift in Sources */,
 				D38EA3F02CA6D5A200503A32 /* BudegetAppApp.swift in Sources */,
 				D38EA4072CA6DB3300503A32 /* BudgetView.swift in Sources */,
 			);
@@ -491,6 +511,19 @@
 			productName = FittedSheetsSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		D30F19722CAB096E008ED32C /* TransActionData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D30F19732CAB096E008ED32C /* TransActionData.xcdatamodel */,
+			);
+			currentVersion = D30F19732CAB096E008ED32C /* TransActionData.xcdatamodel */;
+			path = TransActionData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = D38EA3E42CA6D5A200503A32 /* Project object */;
 }

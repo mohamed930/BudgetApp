@@ -8,21 +8,24 @@
 import SwiftUI
 
 struct TransactionRow: View {
-    var day: String
-    var date: String
-    var amount: Double
-    var currency: String
+    
+    @Binding var model: TransActionModel
         
     // Determines whether the transaction is positive or negative
     private var isPositive: Bool {
-        return amount >= 0
+        switch model.transType {
+        case .TransIn:
+            return true
+        case .TransOut:
+            return false
+        }
     }
     
     var body: some View {
         HStack {
             
             // Amount
-            Text("\(Int(amount)) \(currency)")
+            Text("\(model.price.description) EGP")
                 .font(.headline)
                 .foregroundColor(isPositive ? .green : .red)
             
@@ -31,9 +34,9 @@ struct TransactionRow: View {
             
             // Day and Date
             VStack(alignment: .trailing) {
-                Text(day)
+                Text(model.dayName)
                     .font(.headline)
-                Text(date)
+                Text(model.date)
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }
@@ -60,5 +63,7 @@ struct TransactionRow: View {
 }
 
 #Preview {
-    TransactionRow(day: "Tuesday", date: "28 Jun 2023", amount: 300, currency: "SAR")
+    @State var t = TransActionModel(id: UUID(), dayName: "Wednesday", date: "21-05-2024", price: 204.6, type: "TransIn")
+    
+    return TransactionRow(model: $t)
 }

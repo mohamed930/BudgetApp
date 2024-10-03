@@ -39,6 +39,9 @@ class HomeViewModel: ObservableObject {
     @Published var buttonSheet: Bool = false
     @Published var dateSheet: Bool = false
     
+    @Published var pickedRow: Transaction?
+    @Published var moveToEdit: Bool = false
+    
     func renderData(type: TransactionType? = nil) {
         guard let transaction else { return }
         
@@ -68,7 +71,7 @@ class HomeViewModel: ObservableObject {
                 .filter { $0.transType == .TransOut } // Filter only TransOut transactions
                 .reduce(0) { $0 + $1.price }       // Sum their prices
             
-            remainPrice = transActionTotalPrice - totalOut
+            remainPrice = totalIn - totalOut
         }
         else {
             
@@ -108,6 +111,19 @@ class HomeViewModel: ObservableObject {
             countOfTranaction = data.count
             transActionTotalPrice = data.reduce(0) { $0 + $1.price }
         }
+    }
+    
+    
+    func selectedTransaction(index: Int) {
+        let picked = data[index]
+        
+        guard let transaction else { return }
+        
+        guard let model = transaction.first(where: { $0.id == picked.id }) else { return }
+        
+        pickedRow = model
+        
+        moveToEdit = true
     }
     
     private func getDayName(from date: Date?) -> String {

@@ -186,6 +186,9 @@ struct AddTransactionView: View {
                 
                 
             }
+            .onAppear {
+                viewmodel.loadData()
+            }
         }
         .navigationTitle("اضف معاملة")
         .ignoresSafeArea(.keyboard, edges: .bottom)
@@ -194,8 +197,10 @@ struct AddTransactionView: View {
     }
 }
 
-//#Preview {
-//    @StateObject var dataController = DataController()
-//    
-//    AddTransactionView(viewmodel: AddTransactionViewModel(moc: dataController.container.managedObjectModel))
-//}
+#Preview {
+    @StateObject var dataController = DataController()
+    
+    @Environment(\.managedObjectContext) var moc
+    
+    return AddTransactionView(viewmodel: AddTransactionViewModel(moc: moc,boxMoney: 100.0,edit: true))
+}

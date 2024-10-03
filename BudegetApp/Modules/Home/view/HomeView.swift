@@ -36,7 +36,7 @@ struct HomeView: View {
                         Spacer()
                         
                         NavigationLink {
-                            AddTransactionView(viewmodel: AddTransactionViewModel(moc: moc, boxMoney: viewmodel.remainPrice))
+                            AddTransactionView(viewmodel: AddTransactionViewModel(moc: moc, boxMoney: viewmodel.remainPrice,edit: false))
                         } label: {
                             Image(systemName: "note.text.badge.plus")
                                 .resizable()
@@ -124,9 +124,14 @@ struct HomeView: View {
                         ForEach(0..<viewmodel.data.count, id: \.self) { index in
                             VStack(spacing: 20) {
                                 TransactionRow(model: $viewmodel.data[index])
+                                    .onTapGesture {
+                                        viewmodel.selectedTransaction(index: index)
+                                    }
                             }
                         }
                     }
+                    
+                    NavigationLink("", destination: AddTransactionView(viewmodel: AddTransactionViewModel(moc: moc, boxMoney: viewmodel.remainPrice, edit: true,pickedData: viewmodel.pickedRow)), isActive: $viewmodel.moveToEdit)
                     
                 }
        

@@ -175,8 +175,8 @@
 		D38EA40D2CA6E61400503A32 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				D30F19772CAB11B4008ED32C /* HomeViewModel.swift */,
-				D38EA3F12CA6D5A200503A32 /* HomeView.swift */,
+				D3C1A0702CAF1CB6008E3371 /* viewmodel */,
+				D3C1A06F2CAF1CB0008E3371 /* view */,
 				D33475672CA946F9000E7EB6 /* sheets */,
 			);
 			path = Home;
@@ -189,6 +189,22 @@
 				D33475712CA95B84000E7EB6 /* view */,
 			);
 			path = AddTransaction;
+			sourceTree = "<group>";
+		};
+		D3C1A06F2CAF1CB0008E3371 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				D38EA3F12CA6D5A200503A32 /* HomeView.swift */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		D3C1A0702CAF1CB6008E3371 /* viewmodel */ = {
+			isa = PBXGroup;
+			children = (
+				D30F19772CAB11B4008ED32C /* HomeViewModel.swift */,
+			);
+			path = viewmodel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

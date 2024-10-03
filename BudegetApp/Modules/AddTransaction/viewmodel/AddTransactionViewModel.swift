@@ -22,10 +22,14 @@ class AddTransactionViewModel: ObservableObject {
     
     let moc: NSManagedObjectContext
     let boxMoney: Double
+    let edit: Bool
+    let pickedData: Transaction?
     
-    init(moc: NSManagedObjectContext,boxMoney: Double) {
+    init(moc: NSManagedObjectContext,boxMoney: Double,edit: Bool,pickedData: Transaction? = nil) {
         self.moc = moc
         self.boxMoney = boxMoney
+        self.edit = edit
+        self.pickedData = pickedData
     }
     
     
@@ -65,17 +69,50 @@ class AddTransactionViewModel: ObservableObject {
     }
     
     private func saveTransaction() {
-        let transaction = Transaction(context: moc)
-        transaction.id = UUID()
-        transaction.name = name
-        transaction.comment = comment
-        transaction.price = Double(price)!
-        transaction.type = type!.rawValue
-        transaction.date = Date()
+        
+        if edit {
+            
+            guard let pickedData else { return }
+            
+            pickedData.name = name
+            pickedData.comment = comment
+            pickedData.price = Double(price)!
+            pickedData.type = type!.rawValue
+        }
+        else {
+            let transaction = Transaction(context: moc)
+            transaction.id = UUID()
+            transaction.name = name
+            transaction.comment = comment
+            transaction.price = Double(price)!
+            transaction.type = type!.rawValue
+            transaction.date = Date()
+        }
         
         try? moc.save()
         errorAlert = false
         alert = true
+    }
+    
+    func loadData() {
+        
+        if edit {
+            guard let pickedData else { return }
+            
+            name = pickedData.name ?? ""
+            comment = pickedData.comment ?? ""
+            price = String(pickedData.price)
+            type = pickedData.type == "TransIn" ? .TransIn : .TransOut
+            switch type {
+                case .TransIn:
+                    selectedTransIn = true
+                    selectedTransOut = false
+                case .TransOut:
+                    selectedTransIn = false
+                    selectedTransOut = true
+                case nil: break
+            }
+        }
     }
     
     

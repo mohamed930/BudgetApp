@@ -38,9 +38,11 @@ struct AddTransactionView: View {
                                 Text("اسم المعاملة")
                                     .setFont(fontName: .mainFontBold, size: 14)
                                     .padding(.horizontal,10)
+                                    
                                 
                                 TextField("", text: $viewmodel.name)
                                     .multilineTextAlignment(.trailing)
+                                    .focused(viewmodel.$foucs)
                                     .padding(6)
                                     .setFont(fontName: .mainFontBold, size: 16)
                                     .ignoresSafeArea(.keyboard, edges: .bottom)
@@ -54,6 +56,7 @@ struct AddTransactionView: View {
                                     .padding(.horizontal,10)
                                 
                                 TextEditor(text: $viewmodel.comment)
+                                                .focused(viewmodel.$foucs)
                                                 .foregroundStyle(.secondary)
                                                 .frame(height: 100)
                                                 .padding(.horizontal)
@@ -67,6 +70,7 @@ struct AddTransactionView: View {
                                     .padding(.horizontal,10)
                                 
                                 TextField("", text: $viewmodel.price)
+                                    .focused(viewmodel.$foucs)
                                     .multilineTextAlignment(.trailing)
                                     .padding(6)
                                     .setFont(fontName: .mainFontBold, size: 16)

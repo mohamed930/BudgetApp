@@ -20,6 +20,8 @@ class AddTransactionViewModel: ObservableObject {
     @Published var alert: Bool = false
     @Published var errorAlert: Bool = false
     
+    @FocusState var foucs: Bool
+    
     let moc: NSManagedObjectContext
     let boxMoney: Double
     let edit: Bool
@@ -94,6 +96,7 @@ class AddTransactionViewModel: ObservableObject {
             type = nil
             selectedTransIn = false
             selectedTransOut = false
+            foucs = false
         }
         
         try? moc.save()

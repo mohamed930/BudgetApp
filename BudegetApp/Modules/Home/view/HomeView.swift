@@ -56,11 +56,11 @@ struct HomeView: View {
                 HStack(spacing: 3) {
                     let date = Date()
                     
-                    Text("\(date.month),")
+                    Text(viewmodel.dateName)
                         .font(.system(size: 14))
                         .disabled(true)
                     
-                    Text("\(date.year)")
+                    Text(viewmodel.dateYear)
                         .font(.system(size: 14))
                         .disabled(true)
                         
@@ -155,7 +155,13 @@ struct HomeView: View {
                          sheetView: {
                 
                 if viewmodel.dateSheet {
-                    MonthYearPickerView()
+                    MonthYearPickerView { picked in
+                        
+                        viewmodel.buttonSheet = false
+                        viewmodel.dateSheet = false
+                        
+                        viewmodel.fetchTransactions(selectedYear: picked.selectedYear, selectedMonth: picked.selectedMonth, moc: moc)
+                    }
                 }
                 else {
                     FilterButtonSheet { response in

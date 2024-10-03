@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+struct Result {
+    let selectedMonth: Int
+    let selectedYear: Int
+}
+
 struct MonthYearPickerView: View {
     
     @State private var selectedMonth = Calendar.current.component(.month, from: Date()) // Current month
@@ -14,6 +19,9 @@ struct MonthYearPickerView: View {
     
     let months = Calendar.current.monthSymbols // Array of month names
     let years = Array(2000...2100)             // Range of years to choose from
+    
+    
+    var action: (Result) -> ()
     
     let arabicMonths = [
         "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
@@ -58,6 +66,7 @@ struct MonthYearPickerView: View {
             
             MainButton(buttonTitle: "تأكيد", isEnabled: true) {
                 // MARK: - Confirm Button Action
+                action(Result(selectedMonth: selectedMonth, selectedYear: selectedYear))
             }
         }
         .padding()
@@ -65,5 +74,5 @@ struct MonthYearPickerView: View {
 }
 
 #Preview {
-    MonthYearPickerView()
+    MonthYearPickerView { _ in }
 }

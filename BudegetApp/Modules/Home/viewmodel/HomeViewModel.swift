@@ -27,6 +27,9 @@ struct TransActionModel {
 
 class HomeViewModel: ObservableObject {
     
+    @Published var dateName: String = ""
+    @Published var dateYear: String = ""
+    
     @Published var transaction: [Transaction]?
     
     @Published var data: [TransActionModel] = []
@@ -43,6 +46,12 @@ class HomeViewModel: ObservableObject {
     @Published var moveToEdit: Bool = false
     
     func renderData(type: TransactionType? = nil) {
+        
+        let date = Date()
+        
+        dateName = date.month
+        dateYear = date.year
+        
         guard let transaction else { return }
         
         if type == nil {
@@ -125,6 +134,61 @@ class HomeViewModel: ObservableObject {
         
         moveToEdit = true
     }
+    
+    
+    func fetchTransactions(selectedYear: Int?,selectedMonth: Int,moc: NSManagedObjectContext) {
+        let calendar = Calendar.current
+        
+        // Create date components for the first day of the selected month
+        var startComponents = DateComponents()
+        startComponents.year = selectedYear
+        startComponents.month = selectedMonth
+        startComponents.day = 1
+        
+        // Get the start of the selected month
+        guard let startDate = calendar.date(from: startComponents) else { return }
+        
+        // Get the end of the selected month
+        var endComponents = DateComponents()
+        endComponents.month = 1
+        endComponents.second = -1
+        guard let endDate = calendar.date(byAdding: endComponents, to: startDate) else { return }
+        
+        // Create a fetch request
+        let fetchRequest: NSFetchRequest<Transaction> = Transaction.fetchRequest()
+        
+        // Set a predicate to filter transactions by date
+        fetchRequest.predicate = NSPredicate(format: "date >= %@ AND date <= %@", startDate as NSDate, endDate as NSDate)
+        
+        do {
+            // Fetch the transactions and update the state
+            transaction = try moc.fetch(fetchRequest)
+            
+            guard let transaction else { return }
+            
+            renderData()
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MMMM" // "MMMM" for full month name
+                    
+            // Create a date from the selected month (year is not needed for the month name)
+            var components = DateComponents()
+            components.month = selectedMonth
+            let date = Calendar.current.date(from: components) ?? Date()
+            
+            dateName = formatter.string(from: date)
+            
+            dateYear = String(selectedYear ?? 2024)
+            
+        } catch {
+            print("Failed to fetch transactions: \(error)")
+        }
+    }
+    
+    
+}
+
+extension HomeViewModel {
     
     private func getDayName(from date: Date?) -> String {
         guard let date = date else { return "" }

@@ -87,6 +87,13 @@ class AddTransactionViewModel: ObservableObject {
             transaction.price = Double(price)!
             transaction.type = type!.rawValue
             transaction.date = Date()
+            
+            name = ""
+            comment = ""
+            price = ""
+            type = nil
+            selectedTransIn = false
+            selectedTransOut = false
         }
         
         try? moc.save()
